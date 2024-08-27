@@ -83,7 +83,14 @@ async function run() {
     });
     // services related api
     app.get("/services", async (req, res) => {
-      const cursor = serviceCollection.find();
+      const filter = req.query;
+      const query = {};
+      const options = {
+        sort: {
+          price: filter.sort === "asc" ? 1 : -1,
+        },
+      };
+      const cursor = serviceCollection.find(query, options);
       const result = await cursor.toArray();
       res.send(result);
     });
