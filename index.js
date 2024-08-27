@@ -84,7 +84,9 @@ async function run() {
     // services related api
     app.get("/services", async (req, res) => {
       const filter = req.query;
-      const query = {};
+      const query = {
+        title: { $regex: filter.search, $options: "i" },
+      };
       const options = {
         sort: {
           price: filter.sort === "asc" ? 1 : -1,
